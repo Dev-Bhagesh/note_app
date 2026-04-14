@@ -5,7 +5,7 @@ import Newnote from '@/components/Newnote'
 import Mainbody from "@/components/Mainbody";
 
 const Sidebar = () => {
-    const [newNote, setNewNote] = useState(true)
+    const [newNote, setNewNote] = useState(false)
 
     const noteCreate = ()=>{
         setNewNote(true)
