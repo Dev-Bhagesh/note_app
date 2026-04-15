@@ -4,7 +4,7 @@ import {authMiddleware} from "../middleware/authMiddleware.js";
 const note = express.Router();
 
 note.post("/create",authMiddleware,createNote)
-note.get('/getall',authMiddleware,getNotes)
+note.get('/getnotes',authMiddleware,getNotes)
 note.get('/read/:id',authMiddleware,readNote)
 note.put("/update/:id",authMiddleware,updateNote)
 note.delete("/delete/:id",authMiddleware,deleteNote)

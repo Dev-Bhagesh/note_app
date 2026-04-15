@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import {RegisterFunction,LoginFunction} from '@/services/apis'
+import {useRouter} from "next/navigation";
 
 export default function Register() {
 
@@ -8,6 +9,7 @@ export default function Register() {
     const [userName,setUserName] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const router = useRouter();
 
     const RegisterSubmitHandler = async (e) => {
         e.preventDefault();
@@ -21,9 +23,15 @@ export default function Register() {
         e.preventDefault();
         console.log(email,password)
         let status = await LoginFunction(email,password)
-        
+        if(status?.token){
+            localStorage.setItem("token",status.token);
+            localStorage.setItem("user",status.user)
+            localStorage.setItem("userid",status.userid);
+            router.push("/note");
         alert(JSON.stringify(status,null,2))
+        }else{
         console.log(status?.error || "Login Failed")
+        }
 
     }
 

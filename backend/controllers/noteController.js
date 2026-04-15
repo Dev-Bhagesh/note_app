@@ -4,6 +4,7 @@ export const getNotes = async (req,res)=>{
     try{
         const user = req.user.id;
         const notes = await Note.find({user}).sort({ createdAt: -1 })
+        console.log(notes)
         res.json({
             data:notes,
             message:"Successfully fetched all notes"

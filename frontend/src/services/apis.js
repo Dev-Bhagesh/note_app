@@ -1,9 +1,39 @@
 export const noteCreate = async (title, content) => {
-    console.log('Note recived')
-    console.log(title, content)
 
-    let a = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/notes/create`, {})
-    return a
+    const token = localStorage.getItem('token')
+    let response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notes/create`, {
+        method:'POST',
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":`Bearer ${token}`
+        },
+        body:JSON.stringify({
+            title,content
+        })
+    })
+    if(response.status===401){
+        localStorage.removeItem('token');
+        window.location.href='/';
+        return;
+    }
+    return await response.json();
+}
+
+export const getNotes = async ()=>{
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notes/getnotes`,{
+        method:'GET',
+        headers:{
+            "Authorization":`Bearer ${token}`
+        }
+    })
+    if(response.status===401) {
+        localStorage.clear()
+        window.location.href = '/'  // ✅ redirect to login, not return a string
+        return;
+    }
+    return await response.json();
+
 }
 
 export const RegisterFunction = async (username, email, password) => {

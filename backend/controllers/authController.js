@@ -44,6 +44,7 @@ export const login = async (req,res)=>{
     },key,{expiresIn:'1h'})
     res.json({
         user:user.name,
+        userid:user.id,
         message:"Successfully logged in",
         token:token
     })
