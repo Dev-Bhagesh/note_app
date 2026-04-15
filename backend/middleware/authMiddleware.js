@@ -8,11 +8,11 @@ export const authMiddleware = (req,res,next)=>{
         })
     }
     const token = authHeader.split(" ")[1]
-    console.log(token)
-    console.log(process.env.JWT_KEY)
+    // console.log(token)
+    // console.log(process.env.JWT_KEY)
     try{
         const decode = jwt.verify(token,process.env.JWT_KEY)
-        console.log(decode)
+        // console.log(decode)
         req.user = decode;
         next()
     }catch (error){

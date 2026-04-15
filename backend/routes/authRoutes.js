@@ -8,8 +8,8 @@ router.post("/login",login);
 
 router.get('/profile',authMiddleware,(req,res)=>{
     const user = req.user
-    console.log(user.name)
-    console.log(user.email)
+    // console.log(user.name)
+    // console.log(user.email)
     res.json({
         name:user.name,
         email:user.email,

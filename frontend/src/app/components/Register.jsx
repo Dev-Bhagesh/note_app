@@ -13,24 +13,32 @@ export default function Register() {
 
     const RegisterSubmitHandler = async (e) => {
         e.preventDefault();
-        // console.log(userName, email, password);
-        let status = await RegisterFunction(userName, email ,password)
-        // alert(JSON.stringify(status,null,2))
-        // console.log(status)
+        let status = await RegisterFunction(userName, email, password)
+
+        if(status.status === 400){
+            alert("Email already exists!")
+        } else if(status.status === 200){
+            alert("Successfully registered! Please login.")
+            setIsLogin(true)  // ✅ switch to login form automatically
+            setUserName("")
+            setEmail("")
+            setPassword("")
+        } else {
+            alert("Something went wrong, try again")
+        }
     }
 
     const LoginSubmitHandler =async (e) => {
         e.preventDefault();
-        console.log(email,password)
+        // console.log(email,password)
         let status = await LoginFunction(email,password)
         if(status?.token){
             localStorage.setItem("token",status.token);
             localStorage.setItem("user",status.user)
             localStorage.setItem("userid",status.userid);
             router.push("/note");
-        // alert(JSON.stringify(status,null,2))
         }else{
-        console.log(status?.error || "Login Failed")
+        alert(status?.error || "Login Failed")
         }
 
     }
@@ -75,7 +83,7 @@ export default function Register() {
                     <button
                         onClick={LoginSubmitHandler}
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-600 transition p-3 rounded-xl font-semibold"
+                        className="cursor-pointer bg-blue-500 hover:bg-blue-600 transition p-3 rounded-xl font-semibold"
                     >
                         {isLogin ? "Login" : "Register"}
                     </button>
@@ -83,7 +91,7 @@ export default function Register() {
                     <button
                         onClick={RegisterSubmitHandler}
                         type="submit"
-                        className="bg-blue-500 hover:bg-blue-600 transition p-3 rounded-xl font-semibold"
+                        className="cursor-pointer bg-blue-500 hover:bg-blue-600 transition p-3 rounded-xl font-semibold"
                     >
                         {isLogin ? "Login" : "Register"}
                     </button>
@@ -92,11 +100,11 @@ export default function Register() {
                 </form>
 
                 {/* Toggle */}
-                <p className="text-center text-sm text-gray-400 mt-6">
+                <p className="text-center text-sm text-gray-400 mt-6 cursor-pointer">
                     {isLogin ? "Don’t have an account?" : "Already have an account?"}
                     <button
                         onClick={() => setIsLogin(!isLogin)}
-                        className="text-blue-400 ml-2 hover:underline"
+                        className="text-blue-400 ml-2 hover:underline cursor-pointer "
                     >
                         {isLogin ? "Register" : "Login"}
                     </button>

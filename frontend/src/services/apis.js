@@ -61,9 +61,9 @@ export const getNotes = async ()=>{
 }
 
 export const RegisterFunction = async (username, email, password) => {
-    console.log(`${process.env.NEXT_PUBLIC_API_URL}`)
-    console.log(username, email, password)
-    console.log("data recived and preparing to send post request")
+    // console.log(`${process.env.NEXT_PUBLIC_API_URL}`)
+    // console.log(username, email, password)
+    // console.log("data recived and preparing to send post request")
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
             method: 'POST',
@@ -76,10 +76,10 @@ export const RegisterFunction = async (username, email, password) => {
                 pass: password
             }),
         });
-        console.log("request done data printing on console")
+        // console.log("request done data printing on console")
         const data = await response.json();
-        console.log("success", data)
-        return data
+        // console.log("success", data)
+        return {...data, status: response.status}
     } catch (error) {
         console.log(error)
     }
@@ -87,7 +87,7 @@ export const RegisterFunction = async (username, email, password) => {
 
 export const LoginFunction = async (email, password) => {
     try {
-        console.log(email, password, "successfully recived and preparing to send post request")
+        // console.log(email, password, "successfully recived and preparing to send post request")
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
             method:'POST',
             headers:{
@@ -98,9 +98,9 @@ export const LoginFunction = async (email, password) => {
                 pass:password
             }),
         })
-        console.log("data sent successfully for login")
+        // console.log("data sent successfully for login")
         const data = await response.json();
-        console.log("success", data)
+        // console.log("success", data)
         return data
     } catch (error) {
         console.log(error)
