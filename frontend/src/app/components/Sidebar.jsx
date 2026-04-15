@@ -7,6 +7,8 @@ import {useRouter} from 'next/navigation';
 
 const Sidebar = () => {
     const [newNote, setNewNote] = useState(false)
+    const [selectedNote, setSelectedNote] = useState(null)
+
     const router = useRouter();
     const [userName, setUserName] = useState('')
 
@@ -43,14 +45,22 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            {newNote ?
-                <div className="rightside flex-1 h-full">
-                    <Newnote setNewNote={setNewNote}/>
-                </div> :
-                <div className="rightside flex-1 h-full">
-                    <Mainbody/>
-                </div>
-            }
+            {/*{newNote ?*/}
+            {/*    <div className="rightside flex-1 h-full">*/}
+            {/*        <Newnote setNewNote={setNewNote}/>*/}
+            {/*    </div> :*/}
+            {/*    <div className="rightside flex-1 h-full">*/}
+            {/*        <Mainbody/>*/}
+            {/*    </div>*/}
+            {/*}*/}
+
+            {selectedNote ? (
+                <Newnote existingNote={selectedNote} setSelectedNote={setSelectedNote} />
+            ) : newNote ? (
+                <Newnote setNewNote={setNewNote} />
+            ) : (
+                <Mainbody setSelectedNote={setSelectedNote} />
+            )}
         </div>
     )
 }

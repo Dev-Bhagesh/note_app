@@ -30,6 +30,19 @@ export const deleteNote = async (id) => {
     return await response.json();
 }
 
+export const updateNote = async (id, title, content) => {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notes/update/${id}`, {
+        method: 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ title, content })
+    })
+    return await response.json()
+}
+
 export const getNotes = async ()=>{
     const token = localStorage.getItem('token')
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notes/getnotes`,{

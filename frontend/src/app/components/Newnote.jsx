@@ -1,12 +1,24 @@
 'use client'
 import React from 'react';
 import { useState } from 'react'
-import {noteCreate} from "@/services/apis";
+import {noteCreate,updateNote} from "@/services/apis";
 
-const Newnote = ({setNewNote}) => {
+const Newnote = ({setNewNote,existingNote,setSelectedNote}) => {
 
-    const [noteTitle , setNoteTitle] = useState("")
-    const [noteContent, setNoteContent] = useState("")
+    const [noteTitle , setNoteTitle] = useState(existingNote?.title||"")
+    const [noteContent, setNoteContent] = useState(existingNote?.content||"")
+
+    const isViewing = !!existingNote
+
+    const SaveNote = async ()=>{
+        if(isViewing){
+            await updateNote(existingNote._id, noteTitle, noteContent)
+            setSelectedNote(null)
+        }else{
+            await noteCreate(noteTitle, noteContent)
+            setNewNote(false)
+        }
+    }
 
     const resetNewNote=()=>{
         setNewNote(false)
@@ -19,9 +31,13 @@ const Newnote = ({setNewNote}) => {
         setNoteContent(e.target.value)
     }
 
-    const SaveNote=async ()=>{
-        let note = await noteCreate(noteTitle,noteContent)
-        alert(note)
+    // const SaveNote=async ()=>{
+    //     let note = await noteCreate(noteTitle,noteContent)
+    //     alert(note)
+    // }
+
+    const goBack = () =>{
+        isViewing?setSelectedNote(null):setNewNote(false)
     }
 
     return (
@@ -43,7 +59,7 @@ const Newnote = ({setNewNote}) => {
                     placeholder="Write your note here"
                 ></textarea>
                 <div className="buttons flex gap-1 justify-between">
-                <button onClick={resetNewNote} className="self-start rounded-xl hover:scale-105 duration-300 transition-all
+                <button onClick={goBack} className="self-start rounded-xl hover:scale-105 duration-300 transition-all
                 cursor-pointer p-1 w-3/6 md:w-1/12 bg-blue-500 self-end ">back</button>
                 <button className="save rounded-xl hover:scale-105 duration-300 transition-all
                 cursor-pointer p-1 w-3/6 md:w-1/12 bg-blue-500 self-end" onClick={SaveNote}>Save</button>
