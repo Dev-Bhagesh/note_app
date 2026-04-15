@@ -7,7 +7,7 @@ dotenv.config();
 const key = process.env.JWT_KEY;
 
 export const register = async (req,res)=>{
-    console.log("recived data to store in db")
+    // console.log("recived data to store in db")
     try{
     const {name, email, pass} = req.body
     const present = await User.findOne({email})
@@ -19,7 +19,7 @@ export const register = async (req,res)=>{
     const password = await bcrypt.hash(pass,10)
     const user = await User.create({name,email,password})
     res.send({name:name,email:email,message:"Registered"})
-        console.log("data stored and send the response")
+        // console.log("data stored and send the response")
     }catch(err){
         res.status(500).json({message:err.message})
     }

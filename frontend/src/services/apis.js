@@ -19,6 +19,17 @@ export const noteCreate = async (title, content) => {
     return await response.json();
 }
 
+export const deleteNote = async (id) => {
+    const token = localStorage.getItem('token')
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notes/delete/${id}`, {
+        method:'DELETE',
+        headers:{
+            'Authorization':`Bearer ${token}`
+        }
+    })
+    return await response.json();
+}
+
 export const getNotes = async ()=>{
     const token = localStorage.getItem('token')
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notes/getnotes`,{

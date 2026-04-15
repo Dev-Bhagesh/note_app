@@ -13,10 +13,10 @@ export default function Register() {
 
     const RegisterSubmitHandler = async (e) => {
         e.preventDefault();
-        console.log(userName, email, password);
+        // console.log(userName, email, password);
         let status = await RegisterFunction(userName, email ,password)
-        alert(JSON.stringify(status,null,2))
-        console.log(status)
+        // alert(JSON.stringify(status,null,2))
+        // console.log(status)
     }
 
     const LoginSubmitHandler =async (e) => {
@@ -28,7 +28,7 @@ export default function Register() {
             localStorage.setItem("user",status.user)
             localStorage.setItem("userid",status.userid);
             router.push("/note");
-        alert(JSON.stringify(status,null,2))
+        // alert(JSON.stringify(status,null,2))
         }else{
         console.log(status?.error || "Login Failed")
         }
