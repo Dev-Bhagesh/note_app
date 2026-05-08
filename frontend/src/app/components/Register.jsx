@@ -107,7 +107,8 @@ export default function Register() {
                         onClick={LoginSubmitHandler}
                         type="submit"
                         className="cursor-pointer bg-blue-500 hover:bg-blue-600 transition p-3 rounded-xl font-semibold"
-                        disabled={isLogin}                    >
+                        disabled={loading}
+                         >
                         {loading ? "Please wait..." : "Login"}
                     </button>
                         :
