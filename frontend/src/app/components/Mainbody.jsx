@@ -21,18 +21,14 @@ const Mainbody = ({setSelectedNote}) => {
     }
     return (
         <div className="main w-full h-full p-1 flex flex-col">
-            {/*<div className="search border bg-white/10 backdrop-blur-lg border-white/20 rounded-xl shadow-xl p-1 text-white">*/}
-            {/*    <input className="outline-none bg-transparent text-white placeholder-gray-400"*/}
-            {/*           type="text" placeholder="Search notes..."/>*/}
-            {/*</div>*/}
 
             <div className="notes text-white md:grid md:grid-cols-4 gap-4 flex-1 overflow-y-auto mt-2">
 
                 {notes.length === 0 ? (
                     <p className="text-gray-400 p-2">No notes yet. Create one!</p>
                 ) : (
-                    notes.map((note) => (          // ✅ loop over array
-                        <div key={note._id}        // ✅ always use unique key
+                    notes.map((note) => (
+                        <div key={note._id}
                              className="md:h-25 card text-white bg-white/10 rounded-xl border border-white/20 backdrop-blur-lg shadow-xl p-2 m-2">
                             <h1 className="font-bold">{note.title}</h1>
                             <div className="date text-gray-400 text-sm">

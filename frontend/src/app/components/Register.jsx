@@ -9,29 +9,38 @@ export default function Register() {
     const [userName,setUserName] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [message,setMessage] = useState("");
+    const [messageType, setMessageType] = useState("");
+
     const router = useRouter();
 
     const RegisterSubmitHandler = async (e) => {
         e.preventDefault();
+        setLoading(true);
         let status = await RegisterFunction(userName, email, password)
-
+        setLoading(false);
         if(status.status === 400){
-            alert("Email already exists!")
+            setMessage("Email already exists!")
+            setMessageType("error")
         } else if(status.status === 200){
-            alert("Successfully registered! Please login.")
+            setMessage("Successfully registered! Please login.")
+            setMessageType("success")
             setIsLogin(true)  // ✅ switch to login form automatically
             setUserName("")
             setEmail("")
             setPassword("")
         } else {
-            alert("Something went wrong, try again")
+            setMessageType("error")
         }
     }
 
     const LoginSubmitHandler =async (e) => {
         e.preventDefault();
+        setLoading(true);
         // console.log(email,password)
         let status = await LoginFunction(email,password)
+        setLoading(false);
         if(status?.token){
             localStorage.setItem("token",status.token);
             localStorage.setItem("user",status.user)
@@ -51,6 +60,20 @@ export default function Register() {
                 <h1 className="text-2xl font-bold text-center mb-6">
                     {isLogin ? "Welcome Back 👋" : "Create Account 🚀"}
                 </h1>
+
+                {
+                    message && (
+                        <div
+                            className={`p-3 rounded-xl mb-4 text-center ${
+                            messageType === "success"
+                                ? "bg-green-500"
+                                : "bg-red-500"
+                        }`}
+                            >
+                            {message}
+                        </div>
+                    )
+                }
 
                 <form className="flex flex-col gap-4" >
                     {!isLogin && (
@@ -84,16 +107,17 @@ export default function Register() {
                         onClick={LoginSubmitHandler}
                         type="submit"
                         className="cursor-pointer bg-blue-500 hover:bg-blue-600 transition p-3 rounded-xl font-semibold"
-                    >
-                        {isLogin ? "Login" : "Register"}
+                        disabled={isLogin}                    >
+                        {loading ? "Please wait..." : "Login"}
                     </button>
                         :
                     <button
                         onClick={RegisterSubmitHandler}
                         type="submit"
                         className="cursor-pointer bg-blue-500 hover:bg-blue-600 transition p-3 rounded-xl font-semibold"
+                        disabled={loading}
                     >
-                        {isLogin ? "Login" : "Register"}
+                        {loading ? "Please wait..." : isLogin ? "Login" : "Register"}
                     </button>
                     }
 
